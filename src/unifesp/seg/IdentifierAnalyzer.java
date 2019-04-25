@@ -87,7 +87,7 @@ public class IdentifierAnalyzer {
 
   private void addHeadersToWriters() {
     try {
-      FileWriters.methodIdAnalysisFW.append("identifier,lower camel,upper camel,lower underscore,upper underscore\n");
+      FileWriters.methodIdAnalysisFW.append("identifier,format\n");
     } catch (IOException e) {
       e.printStackTrace();
     }

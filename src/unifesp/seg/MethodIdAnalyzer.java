@@ -7,6 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.IllegalFormatException;
+
+import com.google.common.base.CaseFormat;
 
 public class MethodIdAnalyzer {
   
@@ -26,9 +29,11 @@ public class MethodIdAnalyzer {
         line = line.trim();
         FileWriters.methodIdAnalysisFW.append(line);
         FileWriters.methodIdAnalysisFW.append(",");
-        FileWriters.methodIdAnalysisFW.append(Boolean.valueOf(isCamelCase(line)).toString());
-        FileWriters.methodIdAnalysisFW.append(",");
-        FileWriters.methodIdAnalysisFW.append(Boolean.valueOf(isPascalCase(line)).toString());
+        try { 
+        FileWriters.methodIdAnalysisFW.append(getCaseFormatName(line).toString());
+        } catch(IllegalFormatException e) {
+        FileWriters.methodIdAnalysisFW.append("UNKNOWN");
+        }
         FileWriters.methodIdAnalysisFW.append("\n");
       }
     } catch (UnsupportedEncodingException e) {
@@ -41,12 +46,36 @@ public class MethodIdAnalyzer {
     
   }
   
-  private boolean isCamelCase(String s) {
-    return s.matches("([a-z]+[A-Z]+\\w+)+");
-  }
-  
-  private boolean isPascalCase(String s) {
-    return s.matches("([A-Z]+[a-z]+\\w+)+");
+  private CaseFormat getCaseFormatName(String s) throws IllegalFormatException {
+
+    if (s.contains("_")) {
+
+        if (s.toUpperCase().equals(s))
+            return CaseFormat.UPPER_UNDERSCORE;
+
+        if (s.toLowerCase().equals(s))
+            return CaseFormat.LOWER_UNDERSCORE;
+
+    } else if (s.contains("-")) {
+
+        if (s.toLowerCase().equals(s))
+            return CaseFormat.LOWER_HYPHEN;
+
+    } else {
+
+        if (Character.isLowerCase(s.charAt(0))) {
+
+            if (s.matches("([a-z]+[A-Z]+\\w+)+"))
+                return CaseFormat.LOWER_CAMEL;
+
+        } else {
+
+            if (s.matches("([A-Z]+[a-z]+\\w+)+"))
+                return CaseFormat.UPPER_CAMEL;
+        }
+    }
+
+    throw new IllegalArgumentException("Couldn't find the case format of the given string.");
   }
 
 }

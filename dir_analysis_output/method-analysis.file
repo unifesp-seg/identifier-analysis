@@ -1,5 +1,5 @@
-identifier,camelCase,PascalCase,snake_case,SCREAMING_SNAKE_CASE
-camelCase,true,false
-PascalCase,false,true
-snake_case,false,false
-SCREAMING_SNAKE_CASE,false,false
+identifier,format
+camelCase,LOWER_CAMEL
+PascalCase,UPPER_CAMEL
+snake_case,LOWER_UNDERSCORE
+SCREAMING_SNAKE_CASE,UPPER_UNDERSCORE
