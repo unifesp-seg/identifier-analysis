@@ -1,0 +1,5 @@
+identifier,camelCase,PascalCase,snake_case,SCREAMING_SNAKE_CASE
+camelCase,true,false
+PascalCase,false,true
+snake_case,false,false
+SCREAMING_SNAKE_CASE,false,false
