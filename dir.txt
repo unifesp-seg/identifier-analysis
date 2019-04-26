@@ -1,1 +1,1 @@
-./identifer-examples/
+../java-extractor/dir_extraction_output/
