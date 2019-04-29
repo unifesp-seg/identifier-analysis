@@ -57,11 +57,6 @@ public class MethodIdAnalyzer {
         return CaseFormat.UPPER_UNDERSCORE.name();
       if (s.toLowerCase().equals(s))
         return CaseFormat.LOWER_UNDERSCORE.name();
-    } else if (s.contains("-")) {
-      if (s.toLowerCase().equals(s))
-        return CaseFormat.LOWER_HYPHEN.name();
-      if (s.toUpperCase().equals(s))
-        return "UPPER_HYPHEN";
     } else if (Character.isLowerCase(s.charAt(0))) {
       if (s.matches("([a-z]+[A-Z]+\\w+)+"))
         return CaseFormat.LOWER_CAMEL.name();
@@ -86,9 +81,6 @@ public class MethodIdAnalyzer {
     case "UPPER_UNDERSCORE":
     case "LOWER_UNDERSCORE":
       return checkEach(Arrays.asList(s.split("_")));
-    case "LOWER_HYPHEN":
-    case "UPPER_HYPHEN":
-      return checkEach(Arrays.asList(s.split("-")));
     case "LOWER_CAMEL":
     case "UPPER_CAMEL":
       return checkEach(Arrays.asList(getTermsFromCamel(s)));
@@ -116,9 +108,6 @@ public class MethodIdAnalyzer {
     case "UPPER_UNDERSCORE":
     case "LOWER_UNDERSCORE":
       return Arrays.asList(s.split("_")).size();
-    case "LOWER_HYPHEN":
-    case "UPPER_HYPHEN":
-      return Arrays.asList(s.split("-")).size();
     case "LOWER_CAMEL":
     case "UPPER_CAMEL":
       return Arrays.asList(getTermsFromCamel(s)).size();
