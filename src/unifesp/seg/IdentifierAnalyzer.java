@@ -87,7 +87,7 @@ public class IdentifierAnalyzer {
 
   private void addHeadersToWriters() {
     try {
-      FileWriters.methodIdAnalysisFW.append("identifier,length,format,num_terms,english\n");
+      FileWriters.methodIdAnalysisFW.append("identifier,length,format,num_terms,single_lettered,english\n");
     } catch (IOException e) {
       e.printStackTrace();
     }
