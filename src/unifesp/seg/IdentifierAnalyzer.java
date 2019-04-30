@@ -15,6 +15,11 @@ public class IdentifierAnalyzer {
   private String outputDirPath;
   private FolderInputProcessor inputProcessor;
   private String methodAnalysisFileName;
+  private String classAnalysisFileName;
+  private String interfaceAnalysisFileName;
+  private String fieldAnalysisFileName;
+  private String varAnalysisFileName;
+  private String paramAnalysisFileName;
   private String errorsFileName;
 
   public IdentifierAnalyzer(String filename) {
@@ -25,6 +30,11 @@ public class IdentifierAnalyzer {
       outDir.mkdirs();
     }
     this.methodAnalysisFileName = "method-analysis.file";
+    this.classAnalysisFileName = "class-analysis.file";
+    this.interfaceAnalysisFileName = "interface-analysis.file";
+    this.fieldAnalysisFileName = "field-analysis.file";
+    this.varAnalysisFileName = "variable-analysis.file";
+    this.paramAnalysisFileName = "parameter-analysis.file";
     this.errorsFileName = "errors.file";
   }
 
@@ -50,11 +60,22 @@ public class IdentifierAnalyzer {
 
   private void initializeWriters() throws IOException {
     FileWriters.methodIdAnalysisFW = Util.openFile(this.outputDirPath + File.separator + this.methodAnalysisFileName, false);
+    FileWriters.classIdAnalysisFW = Util.openFile(this.outputDirPath + File.separator + this.classAnalysisFileName, false);
+    FileWriters.interfaceIdAnalysisFW = Util.openFile(this.outputDirPath + File.separator + this.interfaceAnalysisFileName, false);
+    FileWriters.fieldIdAnalysisFW = Util.openFile(this.outputDirPath + File.separator + this.fieldAnalysisFileName, false);
+    FileWriters.variableIdAnalysisFW = Util.openFile(this.outputDirPath + File.separator + this.varAnalysisFileName, false);
+    FileWriters.parameterIdAnalysisFW = Util.openFile(this.outputDirPath + File.separator + this.paramAnalysisFileName, false);
+
     FileWriters.errorsFW = Util.openFile(this.outputDirPath + File.separator + this.errorsFileName, false);
   }
 
   private void closeWriters() {
     Util.closeOutputFile(FileWriters.methodIdAnalysisFW);
+    Util.closeOutputFile(FileWriters.classIdAnalysisFW);
+    Util.closeOutputFile(FileWriters.interfaceIdAnalysisFW);
+    Util.closeOutputFile(FileWriters.fieldIdAnalysisFW);
+    Util.closeOutputFile(FileWriters.variableIdAnalysisFW);
+    Util.closeOutputFile(FileWriters.parameterIdAnalysisFW);
     Util.closeOutputFile(FileWriters.errorsFW);
   }
 
@@ -87,7 +108,12 @@ public class IdentifierAnalyzer {
 
   private void addHeadersToWriters() {
     try {
-      FileWriters.methodIdAnalysisFW.append("identifier,length,format,num_terms,single_lettered,english\n");
+      FileWriters.methodIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_verb\n"); // add contains verb (check only for English words)
+      FileWriters.classIdAnalysisFW.append("identifier,length,format,num_terms,english\n"); // add contains only nouns? (check only for English words)
+      FileWriters.interfaceIdAnalysisFW.append("identifier,length,format,num_terms,english,leading_I\n");
+      FileWriters.fieldIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_$\n");
+      FileWriters.variableIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_$\n");
+      FileWriters.parameterIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_$\n");
     } catch (IOException e) {
       e.printStackTrace();
     }

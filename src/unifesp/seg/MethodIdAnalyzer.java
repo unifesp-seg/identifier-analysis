@@ -32,7 +32,9 @@ public class MethodIdAnalyzer {
         FileWriters.methodIdAnalysisFW.append(",");
         FileWriters.methodIdAnalysisFW.append(String.valueOf(Util.numTerms(line)));
         FileWriters.methodIdAnalysisFW.append(",");
-        FileWriters.methodIdAnalysisFW.append(Util.isEnglish(line) ? "1" : "0");
+        FileWriters.methodIdAnalysisFW.append(Util.isEnglish(line.replace("$", "")) ? "1" : "0");
+        FileWriters.methodIdAnalysisFW.append(",");
+        FileWriters.methodIdAnalysisFW.append(Util.containsVerb(line.replace("$", "")) ? "1" : "0");
         FileWriters.methodIdAnalysisFW.append("\n");
       }
     } catch (UnsupportedEncodingException e) {

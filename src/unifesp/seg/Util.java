@@ -20,38 +20,9 @@ import com.google.common.base.CaseFormat;
 
 public class Util {
 
-  private static Dictionary d = new Dictionary("word-list-scowl.txt");
-
-  public static Set<String> stopwordsActionTokens;
-  // public static String
-  // stopwordsActionTokensFilepath="/home/sourcerer/oreo_related/SourcererCC/java-parser/res/stopwordsActionTokens.txt";
-  public static String stopwordsActionTokensFilepath = "/Users/otaviolemos/eclipse-workspace/java-parser/res/stopwordsActionTokens.txt";
-  static {
-    BufferedReader br;
-    Util.stopwordsActionTokens = new HashSet<String>();
-    try {
-      br = new BufferedReader(new InputStreamReader(new FileInputStream(Util.stopwordsActionTokensFilepath), "UTF-8"));
-      String line;
-      while ((line = br.readLine()) != null && line.trim().length() > 0) {
-        Util.stopwordsActionTokens.add(line.trim());
-        System.out.println(line);
-      }
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-      System.out.println("Fatal error, exiting now");
-      System.exit(1);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      System.out.println("Fatal error, exiting now");
-      System.exit(1);
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.out.println("Fatal error, exiting now");
-      System.exit(1);
-    }
-
-  }
-
+  private static Dictionary englishDict = new Dictionary("word-list-scowl.txt");
+  private static Dictionary englishVerbs = new Dictionary("wordnet-verbs.txt");
+  
   public static Writer openFile(String filename, boolean append) throws IOException {
     try {
       Writer pWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, append), "UTF-8"),
@@ -59,7 +30,6 @@ public class Util {
       return pWriter;
 
     } catch (IOException e) {
-      // IO exception caught
       System.err.println(e.getMessage());
       throw e;
     }
@@ -111,24 +81,33 @@ public class Util {
     case "LEAD_UNDERSCORE":
     case "UPPER_UNDERSCORE":
     case "LOWER_UNDERSCORE":
-      return checkEach(Arrays.asList(s.split("_")));
+      return checkEachAnd(Arrays.asList(s.split("_")), englishDict);
     case "LOWER_CAMEL":
     case "UPPER_CAMEL":
-      return checkEach(Arrays.asList(getTermsFromCamel(s)));
+      return checkEachAnd(Arrays.asList(getTermsFromCamel(s)), englishDict);
     default:
-      if (!d.contains(s))
+      if (!englishDict.contains(s))
         return false;
     }
     return true;
   }
 
-  private static boolean checkEach(List<String> terms) {
+  private static boolean checkEachAnd(List<String> terms, Dictionary d) {
     for (String term : terms) {
       if (term.length() > 0 && !d.contains(term)) {
         return false;
       }
     }
     return true;
+  }
+  
+  private static boolean checkEachOr(List<String> terms, Dictionary d) {
+    for (String term : terms) {
+      if (term.length() > 0 && d.contains(term)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public static int numTerms(String s) {
@@ -145,6 +124,23 @@ public class Util {
     default:
       return 1;
     }
+  }
+  
+  public static boolean containsVerb(String s) {
+    String format = getCaseFormatName(s);
+    switch (format) {
+    case "LEAD_UNDERSCORE":
+    case "UPPER_UNDERSCORE":
+    case "LOWER_UNDERSCORE":
+      return checkEachOr(Arrays.asList(s.split("_")), englishVerbs);
+    case "LOWER_CAMEL":
+    case "UPPER_CAMEL":
+      return checkEachOr(Arrays.asList(getTermsFromCamel(s)), englishVerbs);
+    default:
+      if (!englishVerbs.contains(s))
+        return false;
+    }
+    return true;
   }
 
 }

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class TestMethodIdAnalyzer {
+class TestUtil {
 
   
   @Test
@@ -88,6 +88,46 @@ class TestMethodIdAnalyzer {
   }
   
   @Test
+  void testVerbUnknown() {
+    assertFalse(Util.containsVerb("aTest_WITH_Almost-all-Types"));
+  }
+  
+  @Test
+  void testVerbLeadUnderscore() {
+    assertTrue(Util.containsVerb("_TEST"));
+  }
+  
+  @Test
+  void testVerbLowerUnderscore() {
+    assertFalse(Util.containsVerb("a_token"));
+  }
+  
+  @Test
+  void testVerbUpperUnderscore() {
+    assertTrue(Util.containsVerb("A_CHECK"));
+  }
+  
+  @Test
+  void testVerbLowerCamel() {
+    assertFalse(Util.containsVerb("oneLiquid"));
+  }
+  
+  @Test
+  void testVerbUpperCamel() {
+    assertTrue(Util.containsVerb("OnePrint"));
+  }
+
+  @Test
+  void testVerbAllLower() {
+    assertFalse(Util.isEnglish("thisisatest"));
+  }
+  
+  @Test
+  void testVerbAllUpper() {
+    assertTrue(Util.isEnglish("SET"));
+  }
+  
+  @Test
   void testEnglishUnknown() {
     assertFalse(Util.isEnglish("aTest_WITH_Almost-all-Types"));
   }
@@ -126,5 +166,6 @@ class TestMethodIdAnalyzer {
   void testEnglishAllUpper() {
     assertTrue(Util.isEnglish("TEST"));
   }
+  
   
 }

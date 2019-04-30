@@ -38,8 +38,7 @@ public class Dictionary {
   
   public static void main(String[] args) {
     Dictionary d = new Dictionary("word-list-scowl.txt");
-    System.out.println(d.dict.size());
-    System.out.println(d.contains("test"));
+    System.out.println(d.contains("teste"));
   }
 
 }
