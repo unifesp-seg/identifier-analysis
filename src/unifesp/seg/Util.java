@@ -126,7 +126,7 @@ public class Util {
     }
   }
   
-  public static boolean containsVerb(String s) {
+  public static boolean containsVerb(String s) { // contains possible verb
     String format = getCaseFormatName(s);
     switch (format) {
     case "LEAD_UNDERSCORE":
