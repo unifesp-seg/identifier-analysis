@@ -36,8 +36,8 @@ public class FolderInputProcessor implements IInputProcessor{
     	  System.out.println("Analyzing from " + file.getName());
         IdentifierAnalyzer.FILE_COUNTER++;
         if(file.getName().contains("method")) {
-          MethodIdAnalyzer ma = new MethodIdAnalyzer(file);
-          ma.analyze();
+          Analyzer ma = new Analyzer(file);
+          ma.analyze(IdType.METHOD);
         }
     }
 

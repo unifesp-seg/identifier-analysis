@@ -1,4 +1,4 @@
-identifier,length,format,num_terms,english,contains_verb
+identifier,length,format,num_words,english,contains_verb
 getNumberOfLines,16,LOWER_CAMEL,4,1,1
 commentBegan,12,LOWER_CAMEL,2,1,1
 commentEnded,12,LOWER_CAMEL,2,1,1

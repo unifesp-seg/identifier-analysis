@@ -22,6 +22,7 @@ public class Util {
 
   private static Dictionary englishDict = new Dictionary("word-list-scowl.txt");
   private static Dictionary englishVerbs = new Dictionary("wordnet-verbs.txt");
+  private static Dictionary englishNouns = new Dictionary("wordnet-nouns.txt");
   
   public static Writer openFile(String filename, boolean append) throws IOException {
     try {

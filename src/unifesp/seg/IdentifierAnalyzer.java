@@ -108,12 +108,12 @@ public class IdentifierAnalyzer {
 
   private void addHeadersToWriters() {
     try {
-      FileWriters.methodIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_verb\n"); // add contains verb (check only for English words)
-      FileWriters.classIdAnalysisFW.append("identifier,length,format,num_terms,english,only_nouns\n"); // add contains only nouns? (check only for English words)
-      FileWriters.interfaceIdAnalysisFW.append("identifier,length,format,num_terms,english,leading_I,end_ible,end_able,only_nouns\n");
-      FileWriters.fieldIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_$,only_nouns\n");
-      FileWriters.variableIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_$,single_char,only_nouns\n");
-      FileWriters.parameterIdAnalysisFW.append("identifier,length,format,num_terms,english,contains_$,single_char,only_nouns\n");
+      FileWriters.methodIdAnalysisFW.append("identifier,length,format,num_words,english,contains_verb\n"); // add contains verb (check only for English words)
+      FileWriters.classIdAnalysisFW.append("identifier,length,format,num_words,english\n");
+      FileWriters.interfaceIdAnalysisFW.append("identifier,length,format,num_words,english,leading_I,end_ible,end_able\n");
+      FileWriters.fieldIdAnalysisFW.append("identifier,length,format,num_words,english,contains_$\n,single_char");
+      FileWriters.variableIdAnalysisFW.append("identifier,length,format,num_words,english,contains_$,single_char\n");
+      FileWriters.parameterIdAnalysisFW.append("identifier,length,format,num_words,english,contains_$,single_char\n");
     } catch (IOException e) {
       e.printStackTrace();
     }
